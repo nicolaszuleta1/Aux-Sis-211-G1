@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="examples.css">
+    <script src="Tanglekit/js/jquery-2.1.1.js"></script>
+    <script src="Tanglekit/js/Tangle.js"></script>
+    <script src="Tanglekit/js/Plot.js"></script>
+    <script src="Tanglekit/js/Chart.min.js"></script>
+    <script src="Tanglekit/js/jquery.flot.js"></script>
+    <!-- TangleKit -->
+    <link rel="stylesheet" href="TangleKit/TangleKit.css" type="text/css">
+    <script type="text/javascript" src="TangleKit/mootools.js"></script>
+    <script type="text/javascript" src="TangleKit/sprintf.js"></script>
+    <script type="text/javascript" src="TangleKit/BVTouchable.js"></script>
+    <script type="text/javascript" src="TangleKit/TangleKit.js"></script>
+    <script>
+        jQuery(document).ready(function ($) {
+            var model = {
+                initialize: function () {
+                    this.indexstep = 1;
+                    this.step = [1, 0.5, 0.25, 0.125, 0.0625, 0.03125, 0.015625, 0.0078125];
+                    this.time = 120;
+                    this.velocidad0 = 500;
+                    this.desaceleracion = 4.5;
+                    this.altura0 = 0;
+                },
+                update: function () {
+                    this.velocidad = this.velocidad0;
+                    this.altura = this.altura0;
+
+                    this.pointsVelocidad= [];
+                    this.pointsAltura = [];
+                    for (var t = 0; t < this.time; t += this.step[Number(this.indexstep)]) {
+
+                        this.pointsAltura.push([t, this.altura]);
+                        this.pointsVelocidad.push([t, this.velocidad]);                        
+
+                        this.altura += (this.velocidad) * this.step[Number(this.indexstep)];
+                        this.velocidad += -(this.desaceleracion) * this.step[Number(this.indexstep)];
+                    }
+                    this.pointsVelocidad.push([t, this.velocidad]);
+                    this.pointsAltura.push([t, this.altura]);
+
+                    $("#result").html(`La velocidad es ${this.velocidad} metros/segundo en ${this.time} segundos, <br> la altura es = ${this.altura} metros en ${this.time} segundos,`);
+                    var options = {
+                        color: "#ffffff",
+                        series: {
+                            lines: { show: true },
+                            points: { show: false }
+                        },
+                        legend: {
+                            show: true,
+                            position: "ne"
+                        }
+                    };
+                    $.plot("#canvas1", [{ data: this.pointsVelocidad, label: `Velocidad de ${this.velocidad}` }], options);
+                    $.plot("#canvas2", [{ data: this.pointsAltura, label: `altura de ${this.altura}` }], options);
+
+                }
+            };
+            var elemento = document.getElementById("visual");
+            new Tangle(elemento, model)
+        });
+    </script>
+</head>
+
+<body>
+    <div id="visual">
+        <!-- Controlar dinamicamente las variables desde el navegador, data-min->desde data-man->hasta data-step->de cuanto en cuanto -->
+        Time = <span data-var="time" class="TKAdjustableNumber" data-min="0" data-max="100" data-step="0.1"></span>
+        indexstep = <span data-var="indexstep" class="TKAdjustableNumber" data-min="1" data-max="7" data-step="1"></span>
+        altura0  = <span data-var="altura0" class="TKAdjustableNumber" data-min="0" data-max="500" data-step="1"></span>
+    </div>
+    <!--Mostrar las graficas y los valores que se desea saber -->
+    <div id="canvas1"></div>
+    <div id="canvas2"></div>
+    <div id="result">
+
+    </div>
+</body>
+
+</html>

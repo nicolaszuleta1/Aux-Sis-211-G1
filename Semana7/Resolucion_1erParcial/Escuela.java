@@ -48,7 +48,7 @@ public class Escuela {
         public static void Registrar(){
         Scanner x = new Scanner(System.in);
         System.out.println("Ingrese el nombre completo del estudiante:");
-        String nombreCompleto = x.next();
+        String nombreCompleto = x.nextLine();
         System.out.println("Ingrese el semestre del estudiante:");
         int semestre = x.nextInt();
         
@@ -72,8 +72,7 @@ public class Escuela {
         public static void Buscar(){
         Scanner x = new Scanner(System.in);
         System.out.println("Introduzca el nombre del estudiante:");
-        String nombreE = x.next();
-        x.nextLine();
+        String nombreE = x.nextLine();
         Estudiante mostrar = null;
         
         boolean exists = false;

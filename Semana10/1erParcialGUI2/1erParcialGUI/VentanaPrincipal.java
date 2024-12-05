@@ -1,6 +1,9 @@
 
 import java.awt.*;
 import java.awt.event.*;
+import java.io.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 
 public class VentanaPrincipal extends JFrame{
@@ -9,12 +12,14 @@ public class VentanaPrincipal extends JFrame{
     JButton btnBuscar;
     JButton btnOrdenAlfabetico;
     JButton btnOrdenSemestre;
+    JButton btnGuardar;
+    JButton btnCargar;
 
     public VentanaPrincipal (){
 
         setTitle("Escuela");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(400, 400);
+        setSize(400, 500);
         setLayout(null);
 
         btnRegistrar = new JButton("Registrar");
@@ -37,6 +42,13 @@ public class VentanaPrincipal extends JFrame{
         btnOrdenSemestre.setBounds(80, 270, 200, 30);
         getContentPane().add(btnOrdenSemestre);
         
+        btnGuardar = new JButton("Guardar");
+        btnGuardar.setBounds(80, 320, 200, 30);
+        getContentPane().add(btnGuardar);
+
+        btnCargar = new JButton("Cargar");
+        btnCargar.setBounds(80, 370, 200, 30);
+        getContentPane().add(btnCargar);
 
         btnRegistrar.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
@@ -72,6 +84,19 @@ public class VentanaPrincipal extends JFrame{
                 s.setVisible(true);
             }
         });
+
+        btnGuardar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                Escuela.Guardar();
+            }
+        });
+        
+        btnCargar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e){
+                Escuela.Cargar();
+            }
+        });
     }
+    
     
 }

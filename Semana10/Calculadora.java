@@ -20,7 +20,10 @@ public class Calculadora extends JFrame{
         setLayout(null);
 
         mostrar = new JTextField();
-        -060
+        mostrar.setBounds(15, 15, 265, 45);
+        mostrar.setEditable(false);
+        mostrar.setHorizontalAlignment(SwingConstants.RIGHT);
+        getContentPane().add(mostrar);
 
         borrar = new JButton("AC");
         borrar.setBounds(155, 65, 55, 55);
